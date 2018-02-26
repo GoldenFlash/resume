@@ -1,0 +1,17 @@
+.fr{
+	float:right;
+}
+.fl{
+	float:left;
+}
+.clearfix::after{
+	content: '';
+	display:block;
+	overflow: hidden;
+	clear: both;
+	zoom:1;
+}
+.demo ul li{
+	width:30%;
+	margin-right:10px; 
+}

@@ -1,0 +1,9 @@
+img[data-action="zoom"] {
+  cursor: pointer;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+}
+.title img {
+  border-radius: 60px;
+}
+
