@@ -1,0 +1,269 @@
+/* ==========================================================================
+   简历页 · 按参考稿 A4 版式还原
+   设计基准：A4 210×297mm，四周留白 10mm，内容区 1px #333 边框
+   取色：#344663 标题 / #333 正文 / #000 侧栏键值 / #ff5700 高亮字
+        #efefef 高亮底 / #1890ff 链接
+   ========================================================================== */
+
+.stage {
+  padding: 24px 16px 48px;
+}
+
+/* ---------- A4 纸张 ---------- */
+
+/* 纸张宽度必须锁定为 A4，不能被外部容器压缩，否则各栏宽度与字号比例全部失真 */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 10mm;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
+}
+
+.page-inner {
+  display: flex;
+  align-items: flex-start;
+  min-height: calc(297mm - 20mm);
+  padding: 19px 5px 18px;
+  border: 1px solid #333;
+}
+
+/* ---------- 左栏 ---------- */
+
+.sidebar {
+  flex: 0 0 224px;
+}
+
+.profile {
+  text-align: center;
+}
+
+.avatar {
+  display: block;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+  font-size: 27.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #344663;
+}
+
+.intention {
+  margin-top: 7px;
+  font-size: 15px;
+  color: #344663;
+}
+
+/* ---------- 通用小节标题 ---------- */
+
+.section-title {
+  padding-bottom: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #344663;
+  border-bottom: 2px solid #344663;
+}
+
+.sidebar .section-title {
+  padding-left: 4px;
+}
+
+/* ---------- 左栏小节 ---------- */
+
+.sidebar .section:first-of-type {
+  margin-top: 19px;
+}
+
+.sidebar .section + .section {
+  margin-top: 21px;
+}
+
+.info-list {
+  margin-top: 4px;
+  padding-left: 8px;
+}
+
+.info-row {
+  display: flex;
+  line-height: 23px;
+}
+
+.info-label,
+.info-value {
+  margin: 0;
+  font-size: 12px;
+  color: #000;
+}
+
+.info-label {
+  flex: 0 0 72px;
+}
+
+/* ---------- 右栏 ---------- */
+
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: 28px;
+}
+
+.main .section + .section {
+  margin-top: 18px;
+}
+
+.main-body {
+  padding-left: 9px;
+}
+
+/* 三个小节的「标题分隔线 → 首行正文」间距在原稿中各不相同 */
+.section--work .main-body {
+  margin-top: 15px;
+}
+
+.section--projects .main-body {
+  margin-top: 19.5px;
+}
+
+.section--eval .main-body {
+  margin-top: 5.5px;
+}
+
+/* ---------- 工作经历 ---------- */
+
+/*
+ * 日期 / 公司 / 职位三列由整段工作经历共享一份列宽（subgrid），
+ * 而不是每条经历各自等分：这样长公司名只会撑宽公司列、不会换行，
+ * 同时各行的三列依然对齐。
+ *
+ * 公司列取 auto（即 max-content）而非 1fr —— 中文可在任意字符断行，
+ * min-content 只有一个字宽，约束不住；auto 会精确取公司名整宽，
+ * 剩下的空间由两侧 1fr 平分，接近参考稿的三等分。
+ *
+ * 列间距三层都要写：subgrid 不会继承父级的 gutter，漏掉哪一层，
+ * 那一层的文字就会和相邻列贴在一起。
+ */
+.jobs,
+.job,
+.job-head {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1fr) auto minmax(min-content, 1fr);
+  column-gap: 12px;
+}
+
+.job,
+.job-head,
+.duties {
+  grid-column: 1 / -1;
+}
+
+@supports (grid-template-columns: subgrid) {
+  .job,
+  .job-head {
+    grid-template-columns: subgrid;
+  }
+}
+
+.job + .job {
+  margin-top: 12px;
+}
+
+.job-head {
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+}
+
+.duties {
+  margin-top: 5px;
+  padding-left: 19px;
+  list-style: disc;
+  list-style-position: outside;
+}
+
+.duties li {
+  line-height: 18.4px;
+  color: #000;
+}
+
+/* ---------- 项目经验 ---------- */
+
+.project + .project {
+  margin-top: 24px;
+}
+
+.project-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #000;
+}
+
+.project-line {
+  margin-top: 7px;
+  font-size: 12px;
+  line-height: 18.4px;
+  color: #333;
+}
+
+.project-line strong {
+  font-weight: 700;
+}
+
+.link {
+  color: #1890ff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- 自我评价 ---------- */
+
+.evaluation {
+  padding-left: 14px;
+  list-style: disc;
+  list-style-position: outside;
+}
+
+.evaluation li {
+  line-height: 18.4px;
+  color: #333;
+}
+
+/* 灰底橙字高亮 */
+.hl {
+  padding: 2px;
+  color: #ff5700;
+  background: #efefef;
+  border-radius: 4px;
+}
+
+/* ---------- 打印 ---------- */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .stage {
+    padding: 0;
+  }
+
+  .page {
+    box-shadow: none;
+  }
+}
